@@ -1,0 +1,30 @@
+version: '3.9'
+
+networks:
+  symfony-net:
+
+services:
+  symfony-db:
+    image: mariadb:${MARIADB_VERSION:-11.2.3}
+    container_name: symfony-db
+    hostname: symfony-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: '${MARIADB_DATABASE:-symfony-db}'
+      MYSQL_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD:-symfony-db-root-password}'
+      MYSQL_USER: '${MARIADB_USER:-symfony-db-user}'
+      MYSQL_PASSWORD: '${MARIADB_PASSWORD:-symfony-db-password}'
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 5
+    ports:
+      - '3306:3306'
+    networks:
+      - symfony-net
+    volumes:
+      - symfony-db-data:/var/lib/mysql
+      - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+
+volumes:
+  symfony-db-data:

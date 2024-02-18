@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  symfony-php:
+    build:
+      context: .
+      dockerfile: ./docker/server/Dockerfile
+    container_name: 'symfony-php'
+    hostname: 'symfony-php'
+    ports:
+      - '80:80'
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - ./docker/server/apache/sites-enabled:/etc/apache2/sites-enabled
+      - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+    depends_on:
+      - symfony-db
+    networks:
+      - symfony-net
+
+###> symfony/mailer ###
+  symfony-mailer:
+    image: axllent/mailpit
+    container_name: 'symfony-mailer'
+    hostname: 'symfony-mailer'
+    ports:
+      - '1025'
+      - '8025:8025'
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+###< symfony/mailer ###
