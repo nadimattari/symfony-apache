@@ -1,26 +1,35 @@
 version: '3'
 
+networks:
+  sf-net:
+
 services:
 ###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
+  sf-db:
+    image: mariadb:${MARIADB_VERSION:-11.2.3}
+    container_name: sf-db
+    hostname: sf-db
+    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+      MYSQL_DATABASE: '${MARIADB_DATABASE:-sf-db}'
+      MYSQL_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD:-sf-db-root-pwd}'
+      MYSQL_USER: '${MARIADB_USER:-sf-db-user}'
+      MYSQL_PASSWORD: '${MARIADB_PASSWORD:-sf-db-password}'
     healthcheck:
-      test: ["CMD", "pg_isready"]
-      timeout: 5s
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
       retries: 5
-      start_period: 60s
+    ports:
+      - '3381:3306'
+    networks:
+      - sf-net
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+      - sf-db-data:/var/lib/mysql
+      - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
 ###< doctrine/doctrine-bundle ###
 
 volumes:
 ###> doctrine/doctrine-bundle ###
-  database_data:
+  sf-db-data:
 ###< doctrine/doctrine-bundle ###
+
