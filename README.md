@@ -34,7 +34,7 @@ This repository is a starting point for projects using the Symfony framework.
 - `sf-db`: MariaDB
   - Port = 3381
 - `sf-mailer`: Mailpit (Test Mailer)
-  - UI: http://localhost:8125
+  - UI: `http://localhost:8125`
 
 ## TODO
 
