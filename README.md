@@ -14,9 +14,16 @@ This repository is a starting point for projects using the Symfony framework.
 - Maker Bundle
 - Debug & Profiler Bundle
 - WebPack Encore
-  - VueJS
   - Sass/SCSS loader
   - Typescript
+- VueJS
+  - PrimeVue
+  - PrimeFlex
+  - PrimeIcons
+  - FontAwesome
+  - MaterialIcons
+  - Chart.js
+- ESLint, Prettier, SASS, etc
 
 ## Commands
 
