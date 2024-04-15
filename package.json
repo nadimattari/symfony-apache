@@ -42,6 +42,8 @@
         "@fortawesome/free-regular-svg-icons": "^6.5.2",
         "@fortawesome/free-solid-svg-icons": "^6.5.2",
         "@fortawesome/vue-fontawesome": "^3.0.6",
+        "@rushstack/eslint-patch": "^1.10.2",
+        "@vue/eslint-config-prettier": "^9.0.0",
         "chart.js": "^4.4.2",
         "material-symbols": "^0.17.2",
         "primeflex": "^3.3.1",
