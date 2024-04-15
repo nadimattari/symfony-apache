@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  sf-net:
+
+services:
+###> doctrine/doctrine-bundle ###
+  sf-db:
+    image: mariadb:${MARIADB_VERSION:-11.2.3}
+    container_name: sf-db
+    hostname: sf-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: '${MARIADB_DATABASE:-sf-db}'
+      MYSQL_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD:-sf-db-root-pwd}'
+      MYSQL_USER: '${MARIADB_USER:-sf-db-user}'
+      MYSQL_PASSWORD: '${MARIADB_PASSWORD:-sf-db-password}'
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 5
+    ports:
+      - '3381:3306'
+    networks:
+      - sf-net
+    volumes:
+      - sf-db-data:/var/lib/mysql
+      - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+###< doctrine/doctrine-bundle ###
+
+volumes:
+###> doctrine/doctrine-bundle ###
+  sf-db-data:
+###< doctrine/doctrine-bundle ###
+
