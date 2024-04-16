@@ -7,46 +7,49 @@ This repository is a starting point for projects using the Symfony framework.
 - Symfony 6.4.x
 - Doctrine ORM
 - API Platform
-- Docker file
-  - MariaDB 11.3.2
-  - PHP 8.1
-  - Mailer - Mailpit (Test)
-- Maker Bundle
+- Symfony's Mailer
 - Debug & Profiler Bundle
+- Maker Bundle
 - WebPack Encore
-  - Sass/SCSS loader
-  - Typescript
+    - Sass/SCSS loader
+    - Typescript
+    - Vue loader
 - VueJS
-  - PrimeVue
-  - PrimeFlex
-  - PrimeIcons
-  - FontAwesome
-  - MaterialIcons
-  - Chart.js
+    - PrimeVue
+    - PrimeFlex
+    - PrimeIcons
+    - FontAwesome
+    - MaterialIcons
+    - Chart.js
 - ESLint, Prettier, SASS, etc
+- Docker file
+    - MariaDB 11.3.2
+    - PHP 8.1
+    - Mailer - Mailpit (Test)
 
 ## Commands
 
 - Start/build docker containers
-  - `$ docker compose up -d`
+    - `$ docker compose up -d`
 - Stop docker containers
-  - `$ docker compose [stop|down]
+    - `$ docker compose [stop|down]
 - Compile JS/CSS
-  - `$ npm run [dev|watch|build]
+    - `$ npm run [dev|watch|build]
 
 ## Services
 
 - `sf-php`: Web server
-  - `http://localhost:8180`
+    - `http://localhost:8180`
 - `sf-db`: MariaDB
-  - Port = 3381
+    - Port = 3381
 - `sf-mailer`: Mailpit (Test Mailer)
-  - UI: `http://localhost:8125`
+    - UI: `http://localhost:8125`
 
 ## TODO
 
-- PrimeVue
-  - SakaiVue
+- PrimeVue [DONE]
+    - SakaiVue
+- Configure Typescript (tsconfig)
 - Makefile
 - CI/CD
 - Tests / PHPUnit
