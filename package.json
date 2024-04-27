@@ -45,6 +45,7 @@
         "@rushstack/eslint-patch": "^1.10.2",
         "@vue/eslint-config-prettier": "^9.0.0",
         "chart.js": "^4.4.2",
+        "chartjs-plugin-datalabels": "^2.2.0",
         "material-symbols": "^0.17.2",
         "primeflex": "^3.3.1",
         "primeicons": "^7.0.0",
