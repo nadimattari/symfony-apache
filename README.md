@@ -21,6 +21,8 @@ This repository is a starting point for projects using the Symfony framework.
     - FontAwesome
     - MaterialIcons
     - Chart.js
+    - ChartDataLabels
+- SakaiVue templates
 - ESLint, Prettier, SASS, etc
 - Docker file
     - MariaDB 11.3.2
@@ -47,8 +49,6 @@ This repository is a starting point for projects using the Symfony framework.
 
 ## TODO
 
-- PrimeVue [DONE]
-    - SakaiVue
 - Configure Typescript (tsconfig)
 - Makefile
 - CI/CD
