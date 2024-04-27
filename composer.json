@@ -82,6 +82,7 @@
         }
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest",
         "symfony/maker-bundle": "^1.58",
         "symfony/stopwatch": "6.4.*",
         "symfony/web-profiler-bundle": "6.4.*"
