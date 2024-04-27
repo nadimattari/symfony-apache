@@ -5,8 +5,8 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+// import '@/assets/styles.scss';
 
 import PrimeVue              from 'primevue/config';
 import AutoComplete          from 'primevue/autocomplete';
@@ -23,6 +23,7 @@ import Breadcrumb            from 'primevue/breadcrumb';
 import Calendar              from 'primevue/calendar';
 import Card                  from 'primevue/card';
 import Chart                 from 'primevue/chart';
+import ChartDataLabels       from 'chartjs-plugin-datalabels';
 import CascadeSelect         from 'primevue/cascadeselect';
 import Carousel              from 'primevue/carousel';
 import Checkbox              from 'primevue/checkbox';
@@ -113,22 +114,25 @@ import TriStateCheckbox      from 'primevue/tristatecheckbox';
 import VirtualScroller       from 'primevue/virtualscroller';
 
 // import BlockViewer from '@/components/BlockViewer.vue';
-// import '@/assets/styles.scss';
 
 import { createApp } from 'vue';
 import App from './App.vue';
 // import router from './router';
 
 const app = createApp(App);
+app.use(PrimeVue, { ripple: true });
+app.use(ToastService);
+app.use(DialogService);
+app.use(ConfirmationService);
+app.use(ChartDataLabels);
+
 app.directive('tooltip',    Tooltip);
 app.directive('badge',      BadgeDirective);
 app.directive('ripple',     Ripple);
-app.directive('styleclass', StyleClass);
+app.directive('styleClass', StyleClass);
 
 // app.use(router);
-app.use(PrimeVue, {
-  ripple: true,
-});
+app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
