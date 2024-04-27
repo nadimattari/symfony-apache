@@ -5,8 +5,7 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 
-import './styles/app.css';
-// import '@/assets/styles.scss';
+import './assets/styles.scss';
 
 import PrimeVue              from 'primevue/config';
 import AutoComplete          from 'primevue/autocomplete';
@@ -113,11 +112,11 @@ import TreeTable             from 'primevue/treetable';
 import TriStateCheckbox      from 'primevue/tristatecheckbox';
 import VirtualScroller       from 'primevue/virtualscroller';
 
-// import BlockViewer from '@/components/BlockViewer.vue';
+import BlockViewer from './components/BlockViewer.vue';
 
 import { createApp } from 'vue';
 import App from './App.vue';
-// import router from './router';
+import router from './router';
 
 const app = createApp(App);
 app.use(PrimeVue, { ripple: true });
@@ -131,13 +130,13 @@ app.directive('badge',      BadgeDirective);
 app.directive('ripple',     Ripple);
 app.directive('styleClass', StyleClass);
 
-// app.use(router);
+app.use(router);
 app.use(PrimeVue, { ripple: true });
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
 
-// app.component('BlockViewer', BlockViewer);
+app.component('BlockViewer', BlockViewer);
 
 app.component('Accordion',             Accordion);
 app.component('AccordionTab',          AccordionTab);

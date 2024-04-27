@@ -1,0 +1,11 @@
+
+$gutter: 1rem;
+@import './layout/layout.scss';
+
+/* PrimeVue */
+@import 'primeflex/primeflex.scss';
+@import 'primeicons/primeicons.css';
+
+/* Demos */
+@import './demo/flags/flags.css';
+@import './demo/code.scss';
