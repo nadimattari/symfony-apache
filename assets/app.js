@@ -120,6 +120,7 @@ import router from './router';
 
 const app = createApp(App);
 app.use(PrimeVue, { ripple: true });
+app.use(router);
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
@@ -129,12 +130,6 @@ app.directive('tooltip',    Tooltip);
 app.directive('badge',      BadgeDirective);
 app.directive('ripple',     Ripple);
 app.directive('styleClass', StyleClass);
-
-app.use(router);
-app.use(PrimeVue, { ripple: true });
-app.use(ToastService);
-app.use(DialogService);
-app.use(ConfirmationService);
 
 app.component('BlockViewer', BlockViewer);
 
