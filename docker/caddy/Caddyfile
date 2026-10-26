@@ -1,0 +1,30 @@
+{
+    # Global options
+    auto_https disable_redirects
+}
+
+# Plain HTTP: serves the application and the Mercure hub.
+# http://localhost:8180
+:80 {
+    root * /app/public
+    encode gzip
+
+    # Mercure hub
+    mercure {
+        protocol_version_compatibility 8
+        publisher_jwt {env.MERCURE_JWT_SECRET}!ChangeThisMercureHubJWTSecretKey!
+        subscriber_jwt {env.MERCURE_JWT_SECRET}!ChangeThisMercureHubJWTSecretKey!
+        anonymous
+        cors_origins *
+    }
+
+    php_server
+    file_server
+}
+
+# HTTPS with a locally-trusted certificate, proxied to the HTTP site.
+# https://localhost:8443
+localhost:443, 127.0.0.1:443 {
+    tls internal
+    reverse_proxy 127.0.0.1:80
+}

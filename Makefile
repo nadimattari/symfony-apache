@@ -2,7 +2,8 @@
 DOCKER_COMP = docker compose
 
 # Docker containers
-PHP_CONT = $(DOCKER_COMP) exec php
+PHP_CONT = $(DOCKER_COMP) exec sf-php
+NODE_CONT = $(DOCKER_COMP) exec sf-node
 
 # Executables
 PHP      = $(PHP_CONT) php
@@ -41,7 +42,7 @@ bash: ## Connect to the FrankenPHP container via bash so up and down arrows go t
 
 test: ## Start tests with phpunit, pass the parameter "c=" to add options to phpunit, example: make test c="--group e2e --stop-on-failure"
 	@$(eval c ?=)
-	@$(DOCKER_COMP) exec -e APP_ENV=test php bin/phpunit $(c)
+	@$(DOCKER_COMP) exec -e APP_ENV=test sf-php php bin/phpunit $(c)
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'

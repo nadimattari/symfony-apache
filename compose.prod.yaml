@@ -1,0 +1,21 @@
+services:
+  sf-php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    environment:
+      APP_ENV: prod
+      MERCURE_PUBLIC_URL: ${PROD_MERCURE_PUBLIC_URL:-https://localhost/.well-known/mercure}
+      PROD_HOSTNAME: ${PROD_HOSTNAME:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/caddy/Caddyfile.prod:/etc/frankenphp/Caddyfile
+    restart: always
+  sf-node:
+    profiles: ["build"]
+    command: ["sh", "-c", "npm ci && npm run build"]
+  # Mailpit is dev-only: its "dev" profile is never enabled in production.
+  sf-mailer:
+    profiles: ["dev"]

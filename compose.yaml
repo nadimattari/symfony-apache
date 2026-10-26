@@ -1,35 +1,69 @@
-version: '3'
-
-networks:
-  sf-net:
-
 services:
-###> doctrine/doctrine-bundle ###
+  sf-php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: sf-php
+    hostname: sf-php
+    environment:
+      APP_ENV: ${APP_ENV:-dev}
+      APP_SECRET: ${APP_SECRET}
+      DATABASE_URL: ${DATABASE_URL}
+      MERCURE_JWT_SECRET: ${MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
+      MERCURE_URL: ${MERCURE_URL:-http://sf-php/.well-known/mercure}
+      MERCURE_PUBLIC_URL: ${MERCURE_PUBLIC_URL:-http://localhost:8180/.well-known/mercure}
+    depends_on:
+      sf-db:
+        condition: service_healthy
+    networks:
+      - sf-net
+
+  sf-node:
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    container_name: sf-node
+    hostname: sf-node
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["sh", "-c", "npm install && npm run watch"]
+    networks:
+      - sf-net
+
   sf-db:
-    image: mariadb:${MARIADB_VERSION:-11.2.3}
+    image: mariadb:${MARIADB_VERSION:-11.3.2}
     container_name: sf-db
     hostname: sf-db
     restart: always
     environment:
-      MYSQL_DATABASE: '${MARIADB_DATABASE:-sf-db}'
-      MYSQL_ROOT_PASSWORD: '${MARIADB_ROOT_PASSWORD:-sf-db-root-pwd}'
-      MYSQL_USER: '${MARIADB_USER:-sf-db-user}'
-      MYSQL_PASSWORD: '${MARIADB_PASSWORD:-sf-db-password}'
+      MYSQL_DATABASE: ${MARIADB_DATABASE:-sf-db}
+      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-sf-db-root-pwd}
+      MYSQL_USER: ${MARIADB_USER:-sf-db-user}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD:-sf-db-pwd}
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      test: ["CMD", "mariadb-admin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=$$MYSQL_ROOT_PASSWORD"]
       interval: 5s
       retries: 5
-    ports:
-      - '3381:3306'
     networks:
       - sf-net
     volumes:
       - sf-db-data:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
-###< doctrine/doctrine-bundle ###
+
+  sf-mailer:
+    image: axllent/mailpit
+    container_name: sf-mailer
+    hostname: sf-mailer
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    networks:
+      - sf-net
+
+networks:
+  sf-net:
 
 volumes:
-###> doctrine/doctrine-bundle ###
   sf-db-data:
-###< doctrine/doctrine-bundle ###
-
