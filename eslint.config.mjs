@@ -1,20 +1,17 @@
 import globals from "globals";
-import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
-
-import path from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import pluginJs from "@eslint/js";
-
-// mimic CommonJS variables -- not needed if using CommonJS
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({baseDirectory: __dirname, recommendedConfig: pluginJs.configs.recommended});
+import pluginPrettier from "eslint-plugin-prettier";
 
 export default [
-  {languageOptions: { globals: globals.browser }},
-  ...compat.extends("standard-with-typescript"),
-  ...tseslint.configs.recommended,
+  { languageOptions: { globals: globals.browser } },
   ...pluginVue.configs["flat/essential"],
+  {
+    plugins: { prettier: pluginPrettier },
+    rules: {
+      "prettier/prettier": "warn"
+    }
+  },
+  {
+    ignores: ["node_modules/", "public/build/", "vendor/"]
+  }
 ];

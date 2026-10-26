@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowJs": true,
+    "strict": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["assets/*"]
+    },
+    "types": [],
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["assets/**/*.ts", "assets/**/*.vue", "assets/**/*.js"],
+  "exclude": ["node_modules", "public", "vendor"]
+}

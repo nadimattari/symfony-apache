@@ -23,6 +23,7 @@ import Calendar              from 'primevue/calendar';
 import Card                  from 'primevue/card';
 import Chart                 from 'primevue/chart';
 import ChartDataLabels       from 'chartjs-plugin-datalabels';
+import { Chart as ChartJS }  from 'chart.js';
 import CascadeSelect         from 'primevue/cascadeselect';
 import Carousel              from 'primevue/carousel';
 import Checkbox              from 'primevue/checkbox';
@@ -124,7 +125,7 @@ app.use(router);
 app.use(ToastService);
 app.use(DialogService);
 app.use(ConfirmationService);
-app.use(ChartDataLabels);
+ChartJS.register(ChartDataLabels);
 
 app.directive('tooltip',    Tooltip);
 app.directive('badge',      BadgeDirective);
