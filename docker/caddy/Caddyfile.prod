@@ -1,0 +1,32 @@
+{
+    # Explicit redirects are defined below (see the :80 site).
+    auto_https disable_redirects
+}
+
+# Redirect plain HTTP to HTTPS in production.
+:80 {
+    redir https://{host}{uri} permanent
+}
+
+# HTTPS with a locally-trusted certificate.
+# For a real deployment set PROD_HOSTNAME to your domain and replace
+# "tls internal" with a publicly-trusted certificate configuration.
+{$PROD_HOSTNAME:localhost}:443 {
+    tls internal
+
+    root * /app/public
+    encode gzip
+
+    mercure {
+        protocol_version_compatibility 8
+        publisher_jwt {env.MERCURE_JWT_SECRET}!ChangeThisMercureHubJWTSecretKey!
+        subscriber_jwt {env.MERCURE_JWT_SECRET}!ChangeThisMercureHubJWTSecretKey!
+        anonymous
+        cors_origins *
+    }
+
+    php_server {
+        worker /app/public/index.php 4
+    }
+    file_server
+}
